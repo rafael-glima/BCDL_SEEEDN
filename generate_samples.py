@@ -144,4 +144,62 @@ def generate_samples(net_case,n_of_network_samples,net, percent_of_measurements,
             measurement_vector[i,:] = measurements[measurement_indices]
 
         return injection_values, network_state_samples, measurement_vector
+    
+    elif net_type == "opf-storage-hvdc":
+        
+        measurement_indices = rand.sample(range(net.buses.shape[0]),int(net.buses.shape[0]*percent_of_measurements))
+        
+#         print("meas_indexes:", measurement_indices)
+        
+        injection_values, network_state_samples, measurement_vector = np.zeros((n_of_network_samples,net.buses.shape[0])),\
+        np.zeros((n_of_network_samples,net.buses.shape[0])), np.zeros((n_of_network_samples,int(net.buses.shape[0]*percent_of_measurements)))
+
+        measurement_indices = rand.sample(range(net.buses.shape[0]),int(net.buses.shape[0]*percent_of_measurements))
+
+#         print(range(net.buses.shape[0]))
+
+#         print(measurement_indices)
+
+        for i in range(n_of_network_samples):
             
+            net = pypsa.Network(csv_folder_name='opf-storage-hvdc/opf-storage-data')
+
+            #add three buses
+            n_buses = net.buses.shape[0]
+                
+            injection_values_per_iter = np.squeeze(gmm.sample(n_samples=net.buses.shape[0])[0])
+
+            injection_values[i,:] = injection_values_per_iter
+
+            #add a generator at bus 0
+            net.add("Generator","My gen",
+                        bus="0",
+                        p_set=10,
+                        control="PQ")
+
+
+            for i in range(n_buses):
+                #add a load at bus 1
+                net.add("Load","My load {}".format(i),
+                            bus="{}".format(i),
+                            p_set=injection_values_per_iter[i])
+
+            net.loads.q_set = 10.
+
+            net.pf()
+            
+            try:
+            
+                network_state_samples[i,:] = net.buses_t.v_mag_pu.values
+
+                measurements = np.abs(net.buses_t.v_mag_pu.values + np.random.normal(0, 0.1*5, net.buses.shape[0]))
+            
+            except:
+                
+                network_state_samples[i,:] = net.buses_t.v_mag_pu.values[0]
+
+                measurements = np.abs(net.buses_t.v_mag_pu.values[0] + np.random.normal(0, 0.1*5, net.buses.shape[0]))           
+            
+            measurement_vector[i,:] = measurements[measurement_indices]
+
+        return injection_values, network_state_samples, measurement_vector

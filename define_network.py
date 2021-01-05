@@ -31,5 +31,15 @@ def define_network(net_case):
                         bus1="My bus {}".format((i+1)%n_buses),
                         x=0.1,
                         r=0.01)
+            
+    elif net_case == 'opf-storage-hvdc':
+
+        net = pypsa.Network(csv_folder_name='opf-storage-hvdc/opf-storage-data')
+
+    else:
+        
+        print("Invalid network type!")
+        
+        raise ValueError
         
     return net
