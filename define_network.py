@@ -1,5 +1,6 @@
 
 import pandapower.networks as pn
+import pypsa
 
 # Define Network
 
@@ -13,8 +14,22 @@ def define_network(net_case):
 
         net= pn.case14s()
 
-    else:
+    elif net_case == 'case_3':
 
-        net = pn.case57()
+        net = pypsa.Network()
+
+        #add three buses
+        n_buses = 3
+
+        for i in range(n_buses):
+            net.add("Bus","My bus {}".format(i),
+                        v_nom=5.)
+
+        for i in range(n_buses):
+            net.add("Line","My line {}".format(i),
+                        bus0="My bus {}".format(i),
+                        bus1="My bus {}".format((i+1)%n_buses),
+                        x=0.1,
+                        r=0.01)
         
     return net
