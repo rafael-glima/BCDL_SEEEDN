@@ -83,7 +83,7 @@ def generate_samples(net_case,n_of_network_samples,net, percent_of_measurements,
 
         return injection_values, network_state_samples, measurement_vector
     
-    elif net_type == "pypsa_3":
+    elif net_type == "case_3":
         
         measurement_indices = rand.sample(range(net.buses.shape[0]),int(net.buses.shape[0]*percent_of_measurements))
         
