@@ -12,7 +12,7 @@ def define_network(net_case):
 
     elif net_case == 'case_14s':
 
-        net= pn.case14s()
+        net= pn.case14()
 
     elif net_case == 'case_3':
 
