@@ -18,7 +18,7 @@ Step 3: Click the button shown in the image below to switch to the files folder:
 
 ![Step 3](upload_files_1.png)
 
-Step 4: Use the other button shown below to upload all the auxiliary files, along with the zip folders:
+Step 4: Use the other button shown below to upload all the auxiliary Python (.py) files, along with the two zip folders (electricity_data.zip and opf-storage-hvdc.zip):
 
 ![Step 4](upload_files_2.png)
 
