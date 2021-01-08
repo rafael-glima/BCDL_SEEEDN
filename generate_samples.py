@@ -58,7 +58,7 @@ def generate_samples(net_case,n_of_network_samples,net, percent_of_measurements,
 
                 pp.create_sgen(net=net, bus=j, p_mw=injection_values_per_iter[j])
 
-            pp.diagnostic(net, report_style='detailed', warnings_only=True)
+            #pp.diagnostic(net, report_style='detailed', warnings_only=True)
 
             pp.runpp(net)
 
