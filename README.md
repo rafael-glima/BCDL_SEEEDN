@@ -10,7 +10,7 @@ Step 1: Download the zip file of the repository and unzip it in your local compu
 
 ![Step 1](download_git.png)
 
-Step 2: Upload the "Network_Test.ipynb" notebook:
+Step 2: Access the Google Colab website (https://colab.research.google.com) with your Google account and upload the "Network_Test.ipynb" notebook:
 
 ![Step 2](upload_notebook.png)
 
